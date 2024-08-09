@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f7f7f7;
+            background-image: url('./mark-tegethoff-NMLv5HQZnK4-unsplash.jpg'); /* 樱花背景图 */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #ff6f61;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        #timer {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .heart-container {
+            position: relative;
+            width: 320px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .heart-container img {
+            position: absolute;
+            width: 60px;
+            height: 90px;  /* 长款照片尺寸 */
+            border-radius: 10%;
+            object-fit: cover;
+        }
+
+        /* 调整图片位置，形成心形 */
+        .heart-container img:nth-child(1) { top: 60px; left: 130px; }
+        .heart-container img:nth-child(2) { top: 100px; left: 80px; }
+        .heart-container img:nth-child(3) { top: 100px; left: 180px; }
+        .heart-container img:nth-child(4) { top: 150px; left: 40px; }
+        .heart-container img:nth-child(5) { top: 150px; left: 220px; }
+        .heart-container img:nth-child(6) { top: 200px; left: 90px; }
+        .heart-container img:nth-child(7) { top: 200px; left: 170px; }
+        .heart-container img:nth-child(8) { top: 250px; left: 70px; }
+        .heart-container img:nth-child(9) { top: 250px; left: 190px; }
+        .heart-container img:nth-child(10) { top: 300px; left: 130px; }
+
+        /* 樱花飘舞动画 */
+        @keyframes fall {
+            0% { transform: translateY(-100px); opacity: 1; }
+            100% { transform: translateY(800px); opacity: 0; }
+        }
+
+        .sakura {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: url('sakura-petal.png') no-repeat center/contain;
+            animation: fall linear infinite;
+            opacity: 0;
+        }
+
+        .sakura:nth-child(1) { left: 20%; animation-duration: 5s; animation-delay: 0s; }
+        .sakura:nth-child(2) { left: 40%; animation-duration: 6s; animation-delay: 2s; }
+        .sakura:nth-child(3) { left: 60%; animation-duration: 7s; animation-delay: 4s; }
+        .sakura:nth-child(4) { left: 80%; animation-duration: 8s; animation-delay: 1s; }
+        .sakura:nth-child(5) { left: 50%; animation-duration: 6s; animation-delay: 3s; }
+
+    </style>
+</head>
+<body>
+    <h1>我们从那天开始的幸福</h1>
+    <div id="timer"></div>
+    <div class="heart-container">
+        <!-- 替换为你的长款照片 -->
+        <img src="photo1.jpg" alt="Photo 1">
+        <img src="photo2.jpg" alt="Photo 2">
+        <img src="photo3.jpg" alt="Photo 3">
+        <img src="photo4.jpg" alt="Photo 4">
+        <img src="photo5.jpg" alt="Photo 5">
+        <img src="photo6.jpg" alt="Photo 6">
+        <img src="photo7.jpg" alt="Photo 7">
+        <img src="photo8.jpg" alt="Photo 8">
+        <img src="photo9.jpg" alt="Photo 9">
+        <img src="photo10.jpg" alt="Photo 10">
+    </div>
+
+    <div id="sakura-container">
+        <div class="sakura"></div>
+        <div class="sakura"></div>
+        <div class="sakura"></div>
+        <div class="sakura"></div>
+        <div class="sakura"></div>
+    </div>
+
+    <audio id="bgm" loop>
+        <source src="romantic-music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        function updateTimer() {
+            const startDate = new Date('2023-08-22T21:17:00');
+            const currentDate = new Date();
+            const differenceInTime = currentDate - startDate;
+
+            const days = Math.floor(differenceInTime / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((differenceInTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((differenceInTime % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((differenceInTime % (1000 * 60)) / 1000);
+
+            document.getElementById('timer').textContent = `小何&小李在一起已经 ${days} 天 ${hours} 小时 ${minutes} 分钟 ${seconds} 秒了`;
+        }
+
+        updateTimer();
+        setInterval(updateTimer, 1000);  // 每秒更新一次
+
+        // 自动播放背景音乐
+        window.onload = function() {
+            const audio = document.getElementById('bgm');
+            audio.play().catch(error => {
+                console.log("自动播放失败，浏览器可能阻止了自动播放。");
+                alert("点击页面开始播放背景音乐");
+                document.body.addEventListener('click', () => {
+                    audio.play();
+                });
+            });
+        };
+    </script>
+</body>
+</html>
